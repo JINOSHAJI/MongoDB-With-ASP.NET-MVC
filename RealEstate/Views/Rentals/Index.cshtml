@@ -1,0 +1,73 @@
+﻿@model RealEstate.Model.Rentals.RentalsList
+
+@{
+    ViewBag.Title = "Rentals List";
+}
+
+<h2>Rentals List</h2>
+
+@using (Html.BeginForm())
+{
+    <label for="PriceLimit">Price Limit</label>
+    <input type="text" name="PriceLimit" value="@Model.Filters.PriceLimit" />
+    <label for="MinimumRooms">Minimum Rooms</label>
+    <input type="text" name="MinimumRooms" value="@Model.Filters.MinimumRoom" />
+    <input type="submit" value="Search" />
+}
+
+
+<p>
+    @Html.ActionLink("Create New Rental", "Post")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Description
+        </th>
+        <th>
+            Number Of Rooms
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Price
+        </th>
+        <th>Last Adjustment</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var rental in Model.Rentals)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => rental.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => rental.NumberOfRooms)
+        </td>
+        <td>
+            @String.Join(" ", rental.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => rental.Price)
+        </td>
+        <td>
+            @rental.Adjustments.Select(a => a.Describe()).LastOrDefault()
+        </td>
+        <td>
+            @Html.ActionLink("Adjust Price", "AdjustPrice", new { id = rental.Id })
+            @Html.ActionLink("Increment Price By 100", "IncrementPrice", new { id = rental.Id })
+        </td>
+        <td>
+            @Html.ActionLink("Image", "AttachImage", new { id = rental.Id })
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = rental.Id })
+        </td>
+    </tr>
+    }
+
+</table>
