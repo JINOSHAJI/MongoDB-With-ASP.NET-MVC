@@ -18,6 +18,17 @@ namespace RealEstate.Controllers
     {
         public readonly RealEstateContext context = new RealEstateContext();
 
+        [HttpGet]
+        public ActionResult GetData()
+        {
+            var rentals = context.Rentals.AsQueryable();
+            //RentalsList rentalsList = new RentalsList
+            //{
+            //    Rentals = rentals,
+            //};
+            return Json(rentals, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Index(RentalFilters rentalFilters)
         {
             var rentals = FilterRentals(rentalFilters);

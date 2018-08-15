@@ -28,5 +28,7 @@ namespace RealEstate.App_Start
         }
 
         public IMongoCollection<Rental> Rentals => Database.GetCollection<Rental>("rentals");
+
+       
     }
 }
